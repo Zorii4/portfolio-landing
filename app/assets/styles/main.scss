@@ -1,0 +1,51 @@
+@use 'fonts';
+@use 'tokens';
+@use 'reset';
+
+html {
+  background: var(--neutral-25);
+}
+
+body {
+  min-width: 20rem;
+  overflow-x: hidden;
+  background: var(--neutral-25);
+  color: var(--graphite-900);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100dvh;
+}
+
+.container {
+  width: min(100% - (var(--page-gutter) * 2), var(--container-max));
+  margin-inline: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

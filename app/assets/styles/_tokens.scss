@@ -1,0 +1,55 @@
+:root {
+  --neutral-0: #ffffff;
+  --neutral-25: #faf9f5;
+  --neutral-50: #f3f1ea;
+  --neutral-100: #e7e3d9;
+  --neutral-300: #b8b4aa;
+  --neutral-500: #77736b;
+  --graphite-700: #353532;
+  --graphite-900: #171816;
+  --graphite-950: #0e0f0d;
+  --signal-300: #d9ff61;
+  --signal-500: #b8e81c;
+  --cold-300: #a5adff;
+  --cold-500: #6674f6;
+  --cold-700: #4652c6;
+
+  --font-sans: 'Onest', Arial, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-pill: 999px;
+
+  --container-max: 75rem;
+  --page-gutter: 1.25rem;
+  --grid-gap: 0.75rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --page-gutter: 3rem;
+    --grid-gap: 1.5rem;
+  }
+}
+
+@media (min-width: 75rem) {
+  :root {
+    --page-gutter: 7.5rem;
+  }
+}

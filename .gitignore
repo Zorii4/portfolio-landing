@@ -1,0 +1,28 @@
+node_modules/
+.nuxt/
+.output/
+dist/
+.pnpm-store/
+*.log
+
+# Local project process and design references
+SPEC.md
+ROADMAP.md
+AGENTS.md
+docs/engineering-decisions.md
+docs/design-reference/
+
+# Local AI agent configuration and artifacts
+.agents/
+.codex/
+.claude/
+.cursor/
+.continue/
+.gemini/
+.roo/
+.windsurf/
+.aider*
+CLAUDE.md
+.github/copilot-instructions.md
+.github/instructions/
+.github/prompts/
