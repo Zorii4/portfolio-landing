@@ -90,7 +90,6 @@ onBeforeUnmount(() => {
     <span class="structure-overlay__boundary structure-overlay__boundary--personal" />
     <span class="structure-overlay__boundary structure-overlay__boundary--contacts" />
 
-    <span class="structure-overlay__label structure-overlay__label--header">header.sticky</span>
     <span class="structure-overlay__label structure-overlay__label--hero">hero.title</span>
     <span class="structure-overlay__label structure-overlay__label--capabilities">capability.card</span>
     <span class="structure-overlay__label structure-overlay__label--work">project.preview</span>
@@ -105,7 +104,7 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .structure-overlay {
   position: absolute;
-  z-index: 20;
+  z-index: 9;
   inset: 0;
   pointer-events: none;
   --header-boundary: 4.5rem;
@@ -197,12 +196,6 @@ onBeforeUnmount(() => {
   font-family: var(--font-mono);
   font-size: 0.5625rem;
   line-height: 1.2;
-}
-
-.structure-overlay__label--header {
-  position: fixed;
-  top: 0.625rem;
-  left: max(var(--page-gutter), calc((100% - var(--container-max)) / 2));
 }
 
 .structure-overlay__label--hero {

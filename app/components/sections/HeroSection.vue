@@ -5,6 +5,8 @@ defineProps<{
   hero: (typeof portfolio)['hero']
   links: (typeof portfolio)['links']
   photoLabel: string
+  photoSrc: string
+  photoAlt: string
 }>()
 </script>
 
@@ -22,15 +24,15 @@ defineProps<{
         </ul>
 
         <div class="hero__actions">
-          <a class="hero__action hero__action--primary" href="#work">Посмотреть работу <span aria-hidden="true">↗</span></a>
-          <button class="hero__action hero__action--secondary" type="button" disabled aria-disabled="true">Открыть резюме <span aria-hidden="true">↗</span></button>
-          <a class="hero__github" :href="links.github" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <a class="hero__action hero__action--primary" href="#work">Посмотреть работу <ArrowUpRightIcon /></a>
+          <a class="hero__action hero__action--secondary" :href="links.resume" target="_blank" rel="noopener noreferrer">Открыть резюме <ArrowUpRightIcon /></a>
+          <a class="hero__github" :href="links.github" target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRightIcon /></a>
         </div>
       </div>
 
       <div class="hero__media">
-        <MediaPlaceholder :label="photoLabel" aspect-ratio="4 / 5" />
-        <p>PHOTO PLACEHOLDER · NATURAL PORTRAIT · 4:5</p>
+        <MediaPlaceholder :label="photoLabel" :src="photoSrc" :alt="photoAlt" aspect-ratio="4 / 5" />
+        <p v-if="!photoSrc">PHOTO PLACEHOLDER · NATURAL PORTRAIT · 4:5</p>
       </div>
     </div>
   </section>
@@ -43,12 +45,13 @@ defineProps<{
 
 .hero__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 20.5rem;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   align-items: end;
-  gap: clamp(2.5rem, 6vw, 6rem);
+  gap: var(--grid-gap);
 }
 
 .hero__copy {
+  grid-column: span 7;
   max-width: 50rem;
 }
 
@@ -84,23 +87,22 @@ h1 {
 .hero__status {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
   margin-top: var(--space-6);
-  padding: 0.625rem 0.75rem;
+  padding: 0.4375rem 0.625rem;
   border-radius: var(--radius-pill);
   background: var(--signal-300);
   color: var(--graphite-950);
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   line-height: 1.2;
 }
 
 .hero__status span {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.375rem;
+  height: 0.375rem;
   border-radius: 50%;
   background: var(--signal-500);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--graphite-950) 25%, transparent);
 }
 
 .hero__facts {
@@ -123,7 +125,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
+  column-gap: 0.75rem;
+  row-gap: 0.5rem;
   margin-top: var(--space-8);
 }
 
@@ -153,10 +156,20 @@ h1 {
 .hero__action--secondary {
   border-color: var(--neutral-100);
   background: var(--neutral-0);
-  color: var(--neutral-300);
+  color: var(--cold-700);
+}
+
+.hero__action--secondary:hover {
+  border-color: var(--cold-500);
+  color: var(--cold-500);
 }
 
 .hero__github {
+  gap: 0.375rem;
+  margin-left: 0;
+  padding-inline: 1rem;
+  border: 1px solid color-mix(in srgb, var(--cold-500) 42%, var(--neutral-100));
+  background: color-mix(in srgb, var(--cold-300) 9%, var(--neutral-0));
   color: var(--cold-700);
 }
 
@@ -166,17 +179,24 @@ h1 {
   }
 
   .hero__github:hover {
+    border-color: var(--cold-500);
+    background: color-mix(in srgb, var(--cold-300) 18%, var(--neutral-0));
     color: var(--cold-500);
   }
 }
 
 .hero__media {
+  grid-column: 9 / span 3;
   min-width: 0;
 }
 
 .hero__media p {
   margin-top: 0.75rem;
   color: var(--neutral-500);
+}
+
+.hero__media :deep(.media-placeholder--image) {
+  object-position: 60% center;
 }
 
 @media (max-width: 47.99rem) {
@@ -191,8 +211,13 @@ h1 {
     gap: 1.75rem;
   }
 
+  .hero__copy,
+  .hero__media {
+    grid-column: auto;
+  }
+
   h1 {
-    font-size: 3.5rem;
+    font-size: 3.25rem;
     letter-spacing: -0.065em;
     line-height: 1;
   }
@@ -207,13 +232,17 @@ h1 {
   }
 
   .hero__media {
-    width: min(100%, 15rem);
+    width: 100%;
     order: 1;
   }
 
   .hero__actions {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .hero__github {
+    margin-left: 0;
   }
 
   .hero__action,

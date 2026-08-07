@@ -74,7 +74,7 @@ h2 {
 
 .experience__timeline li {
   display: grid;
-  grid-template-columns: minmax(7rem, 1fr) minmax(0, 5.5fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gap);
   padding-block: var(--space-5);
   border-top: 1px solid var(--neutral-100);
@@ -85,7 +85,12 @@ h2 {
 }
 
 .experience__period {
+  grid-column: span 3;
   color: var(--cold-700);
+}
+
+.experience__timeline li > div {
+  grid-column: span 9;
 }
 
 h3 {
@@ -108,11 +113,12 @@ h3 {
   }
 
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .experience__heading > :last-child {
+    max-width: none;
     font-size: 1rem;
     line-height: 1.5rem;
   }
@@ -120,6 +126,11 @@ h3 {
   .experience__timeline li {
     grid-template-columns: 1fr;
     gap: var(--space-2);
+  }
+
+  .experience__period,
+  .experience__timeline li > div {
+    grid-column: auto;
   }
 }
 </style>

@@ -3,6 +3,7 @@ import type { portfolio } from '~/data/portfolio'
 
 defineProps<{
   person: (typeof portfolio)['person']
+  resumeHref: string
   structureMode: boolean
 }>()
 
@@ -22,6 +23,7 @@ const navigation = [
 <template>
   <header class="app-header">
     <div class="app-header__inner">
+      <span v-if="structureMode" class="app-header__structure-label" aria-hidden="true">header.sticky</span>
       <a class="app-header__brand" href="#profile" aria-label="К началу портфолио">
         <span class="app-header__monogram" aria-hidden="true">AZ</span>
         <span class="app-header__name">{{ person.name }} · {{ person.role }}</span>
@@ -35,9 +37,9 @@ const navigation = [
         :structure-mode="structureMode"
         @update="emit('updateMode', $event)"
       />
-      <button class="app-header__resume" type="button" disabled aria-disabled="true">
-        Резюме ↗
-      </button>
+      <a class="app-header__resume" :href="resumeHref" target="_blank" rel="noopener noreferrer">
+        Резюме <ArrowUpRightIcon />
+      </a>
     </div>
   </header>
 </template>
@@ -58,12 +60,28 @@ const navigation = [
 }
 
 .app-header__inner {
+  position: relative;
   display: flex;
   min-height: 4.5rem;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   padding-inline: 2.5rem;
+}
+
+.app-header__structure-label {
+  position: absolute;
+  z-index: 1;
+  top: 0.625rem;
+  left: 0;
+  padding: 0.25rem 0.375rem;
+  border: 1px solid color-mix(in srgb, var(--cold-500) 46%, transparent);
+  border-radius: 0.25rem;
+  background: var(--neutral-25);
+  color: var(--cold-700);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  line-height: 1.2;
 }
 
 .app-header__brand {
@@ -97,6 +115,7 @@ const navigation = [
 
 .app-header__nav {
   display: flex;
+  gap: 0.5rem;
   color: var(--graphite-950);
 }
 
@@ -104,7 +123,7 @@ const navigation = [
   display: inline-flex;
   min-height: 2.125rem;
   align-items: center;
-  padding-inline: 0.625rem;
+  padding-inline: 0.875rem;
   border-radius: var(--radius-pill);
   transition: color 200ms ease-out;
 }
@@ -116,10 +135,24 @@ const navigation = [
 }
 
 .app-header__resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--neutral-300);
+  color: var(--cold-700);
+  transition: color 200ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-header__resume:hover {
+    color: var(--cold-500);
+  }
+}
+
+:global(.app-shell[data-mode='structure'] .app-header) {
+  background: var(--neutral-25);
 }
 
 @media (max-width: 63.99rem) {

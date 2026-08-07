@@ -34,16 +34,16 @@ const emit = defineEmits<{
 <style scoped lang="scss">
 .mode-toggle {
   display: inline-flex;
-  min-height: 2rem;
-  padding: 0.1875rem;
+  min-height: 2.25rem;
+  padding: 0.25rem;
   border: 1px solid var(--neutral-100);
   border-radius: var(--radius-pill);
   background: var(--neutral-0);
 }
 
 .mode-toggle__button {
-  min-height: 1.5rem;
-  padding: 0.125rem 0.5rem;
+  min-height: 1.75rem;
+  padding: 0.1875rem 0.625rem;
   border: 0;
   border-radius: var(--radius-pill);
   background: transparent;

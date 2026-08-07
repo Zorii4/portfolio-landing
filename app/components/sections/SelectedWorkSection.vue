@@ -25,7 +25,7 @@ defineProps<{
           <p class="project-case__status">{{ project.status }}</p>
           <h3 :id="`${project.id}-title`">{{ project.title }}</h3>
           <p>{{ project.summary }}</p>
-          <a :href="project.url" target="_blank" rel="noopener noreferrer">Открыть GitHub <span aria-hidden="true">↗</span></a>
+          <a :href="project.url" target="_blank" rel="noopener noreferrer">Открыть GitHub <ArrowUpRightIcon /></a>
         </header>
 
         <ol class="project-case__steps">
@@ -53,7 +53,7 @@ defineProps<{
         <li v-for="item in work.additional" :key="item.title">
           <h3>{{ item.title }}</h3>
           <p>{{ item.description }}</p>
-          <a v-if="item.url" :href="item.url" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a>
+          <a v-if="item.url" :href="item.url" target="_blank" rel="noopener noreferrer">Открыть <ArrowUpRightIcon /></a>
         </li>
       </ul>
     </div>
@@ -124,9 +124,9 @@ h2 {
 
 .additional-work li {
   display: flex;
-  min-height: 13rem;
+  min-height: 12rem;
   flex-direction: column;
-  padding: var(--space-6);
+  padding: var(--space-5);
   border: 1px solid var(--neutral-100);
   border-radius: var(--radius-md);
   background: var(--neutral-0);
@@ -157,6 +157,11 @@ h2 {
   transition: color 200ms ease-out;
 }
 
+.additional-work a,
+.project-case__header a {
+  gap: 0.375rem;
+}
+
 .project-case__header {
   max-width: 58rem;
 }
@@ -179,7 +184,7 @@ h3 {
 .project-case__header > p:last-of-type {
   max-width: 58rem;
   margin-top: 0.875rem;
-  color: var(--neutral-0);
+  color: var(--neutral-300);
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.875rem;
@@ -219,14 +224,14 @@ h3 {
 
 .project-case__steps li {
   min-width: 0;
-  padding: var(--space-5);
+  padding: var(--space-4);
   border: 1px solid color-mix(in srgb, var(--neutral-0) 14%, transparent);
   border-radius: var(--radius-sm);
   background: var(--graphite-900);
 }
 
 h4 {
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.0125rem;
@@ -243,7 +248,7 @@ h4 {
 
 .project-case__media {
   display: grid;
-  grid-template-columns: minmax(0, 1.95fr) minmax(14rem, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gap);
   align-items: start;
   margin-top: var(--space-8);
@@ -251,7 +256,12 @@ h4 {
 
 .project-case__media-side {
   display: grid;
+  grid-column: span 4;
   gap: var(--grid-gap);
+}
+
+.project-case__media > :first-child {
+  grid-column: span 8;
 }
 
 .project-case__media :deep(.media-placeholder) {
@@ -299,19 +309,25 @@ h4 {
     grid-template-columns: 1fr;
   }
 
+  .project-case__media > :first-child,
+  .project-case__media-side {
+    grid-column: auto;
+  }
+
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .selected-work__heading > :last-child {
+    max-width: none;
     font-size: 1rem;
     line-height: 1.5rem;
   }
 
   .project-case h3 {
-    font-size: 2rem;
-    line-height: 2.25rem;
+    font-size: 1.875rem;
+    line-height: 2.125rem;
   }
 
   .project-case__header > p:last-of-type {
@@ -320,8 +336,8 @@ h4 {
   }
 
   .project-case h4 {
-    font-size: 1.25rem;
-    line-height: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.375rem;
   }
 
   .project-case__secondary {

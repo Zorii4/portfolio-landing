@@ -175,7 +175,7 @@ export const portfolio = {
     title: 'Ищу сильную продуктовую команду',
     description: 'Рассматриваю frontend-роли уровня Middle+ / Strong Middle с основным стеком Vue, Nuxt и TypeScript.',
     actionLabel: 'Связаться по поводу позиции',
-    resumeLabel: 'Скачать резюме ↗',
+    resumeLabel: 'Скачать резюме',
     footer: 'Антон Зорин · Казань · удалённо или гибрид · 2026',
     items: [
       ['Telegram · @Zorin_4', '@Zorin_4', 'telegram'],
@@ -194,9 +194,12 @@ export const portfolio = {
     email: 'mailto:workzor@bk.ru',
     setka: 'https://setka.ru/users/019d2a46-457b-7482-96a3-912fb5ac6ee7',
     linkedin: 'https://www.linkedin.com/in/zori4/',
+    resume: '/resume/anton-zorin-frontend-vue-nuxt-ts.pdf',
   },
   placeholders: {
     heroPhoto: 'PHOTO_01_HERO',
+    heroPhotoSrc: '/images/anton-zorin-hero.jpg',
+    heroPhotoAlt: 'Антон Зорин — Frontend Engineer',
     personalPhotoOne: 'PHOTO_02_PERSONAL',
     personalPhotoTwo: 'PHOTO_03_PERSONAL',
   },

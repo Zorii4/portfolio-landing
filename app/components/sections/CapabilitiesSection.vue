@@ -59,7 +59,7 @@ h2 {
 }
 
 .capabilities__heading > :last-child {
-  max-width: 39rem;
+  max-width: 46rem;
   margin-top: var(--space-5);
   color: var(--neutral-500);
   font-size: 1.25rem;
@@ -90,14 +90,13 @@ h2 {
 .capability-card__line {
   width: 100%;
   height: 2px;
-  margin-bottom: auto;
   background: var(--cold-500);
   transition: background-color 200ms ease-out;
 }
 
 h3 {
   max-width: 26rem;
-  margin-top: var(--space-12);
+  margin-top: var(--space-5);
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -151,11 +150,12 @@ h3 {
   }
 
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .capabilities__heading > :last-child {
+    max-width: none;
     font-size: 1rem;
     line-height: 1.5rem;
   }

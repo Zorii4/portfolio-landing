@@ -47,6 +47,7 @@ withDefaults(
 
 .media-placeholder--image {
   width: 100%;
+  border: 0;
   object-fit: cover;
 }
 

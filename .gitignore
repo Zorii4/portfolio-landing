@@ -11,6 +11,7 @@ ROADMAP.md
 AGENTS.md
 docs/engineering-decisions.md
 docs/design-reference/
+review/
 
 # Local AI agent configuration and artifacts
 .agents/

@@ -33,14 +33,14 @@ const contactHref = (key: (typeof props.contacts.items)[number][2]) => props.lin
         >
           <span class="contacts__link-label">
             {{ label }}
-            <i aria-hidden="true">↗</i>
+            <ArrowUpRightIcon />
           </span>
           <small>{{ detail }}</small>
         </a>
         </div>
-        <button class="contacts__resume" type="button" disabled aria-disabled="true">
-          {{ contacts.resumeLabel }}
-        </button>
+        <a class="contacts__resume" :href="links.resume" download>
+          {{ contacts.resumeLabel }} <ArrowUpRightIcon />
+        </a>
       </div>
 
       <p class="contacts__footer">{{ contacts.footer }}</p>
@@ -166,6 +166,10 @@ h2 {
   font-style: normal;
 }
 
+.contacts__link-label :deep(.arrow-up-right-icon) {
+  color: var(--cold-500);
+}
+
 .contacts__link small {
   overflow: hidden;
   margin-top: var(--space-1);
@@ -178,13 +182,25 @@ h2 {
 }
 
 .contacts__resume {
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.375rem;
   min-height: auto;
   padding: var(--space-4) 0 0;
-  border-width: 1px 0 0;
+  border: 0;
   border-radius: 0;
-  color: var(--neutral-500);
-  cursor: not-allowed;
+  color: var(--cold-300);
+  cursor: pointer;
   font-size: 0.75rem;
+  transition: color 200ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contacts__resume:hover {
+    color: var(--cold-500);
+  }
 }
 
 .contacts__footer {
@@ -206,11 +222,12 @@ h2 {
   }
 
   h2 {
-    font-size: 2.75rem;
-    line-height: 2.875rem;
+    font-size: 2.5rem;
+    line-height: 2.625rem;
   }
 
   .contacts__heading > :last-child {
+    max-width: none;
     font-size: 1rem;
     line-height: 1.5rem;
   }
@@ -227,5 +244,6 @@ h2 {
   .contacts__link {
     min-height: 3.25rem;
   }
+
 }
 </style>

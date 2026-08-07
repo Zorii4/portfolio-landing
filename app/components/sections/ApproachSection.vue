@@ -111,8 +111,8 @@ h3 {
 
 .approach__ai-note {
   display: grid;
-  grid-template-columns: minmax(12rem, 1fr) minmax(0, 3.5fr);
-  gap: var(--space-6);
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: var(--space-12);
   margin-top: var(--grid-gap);
   padding: 1.75rem;
   border-radius: var(--radius-md);
@@ -121,6 +121,7 @@ h3 {
 }
 
 .approach__ai-note p {
+  max-width: 11rem;
   color: var(--cold-300);
 }
 
@@ -142,14 +143,18 @@ h3 {
   }
 
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .approach__heading > :last-child,
   .approach__ai-note span {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .approach__heading > :last-child {
+    max-width: none;
   }
 
   .approach__steps,

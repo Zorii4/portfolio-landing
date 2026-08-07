@@ -100,8 +100,8 @@ h3 {
 }
 
 .impact-card p {
-  min-height: 2.5rem;
-  margin-top: var(--space-3);
+  min-height: 1.75rem;
+  margin-top: var(--space-2);
   color: var(--cold-300);
   font-size: 0.625rem;
   letter-spacing: 0.02em;
@@ -110,10 +110,10 @@ h3 {
 
 .impact-card__fragment {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   min-height: 5.75rem;
-  margin-top: var(--space-6);
+  margin-top: var(--space-4);
   padding: 0.875rem;
   border: 1px solid color-mix(in srgb, var(--neutral-0) 12%, transparent);
   border-radius: var(--radius-sm);
@@ -156,11 +156,12 @@ h3 {
   }
 
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .professional-impact__heading > :last-child {
+    max-width: none;
     font-size: 1rem;
     line-height: 1.5rem;
   }

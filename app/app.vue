@@ -15,6 +15,13 @@ useHead({
   htmlAttrs: {
     lang: 'ru',
   },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href: '/favicon.svg',
+    },
+  ],
 })
 
 useSeoMeta({
@@ -25,8 +32,10 @@ useSeoMeta({
 
 <template>
   <div class="app-shell" :data-mode="structureMode ? 'structure' : 'surface'">
+    <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
     <AppHeader
       :person="portfolio.person"
+      :resume-href="portfolio.links.resume"
       :structure-mode="structureMode"
       @update-mode="structureMode = $event"
     />
@@ -35,6 +44,8 @@ useSeoMeta({
         :hero="portfolio.hero"
         :links="portfolio.links"
         :photo-label="portfolio.placeholders.heroPhoto"
+        :photo-src="portfolio.placeholders.heroPhotoSrc"
+        :photo-alt="portfolio.placeholders.heroPhotoAlt"
       />
       <CapabilitiesSection :capabilities="portfolio.capabilities" />
       <SelectedWorkSection :work="portfolio.selectedWork" />

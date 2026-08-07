@@ -64,13 +64,14 @@ h2 {
 
 .personal__content {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(28rem, 0.9fr);
-  gap: clamp(2rem, 7vw, 7.5rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
   align-items: start;
   margin-top: clamp(2rem, 5vw, 3.5rem);
 }
 
 .personal__copy {
+  grid-column: span 6;
   max-width: 37.5rem;
   font-size: 1.25rem;
   line-height: 1.875rem;
@@ -84,15 +85,9 @@ h2 {
 
 .personal__photos {
   display: grid;
+  grid-column: span 6;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-
-@media (max-width: 63.99rem) {
-  .personal__content {
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
-    gap: var(--space-8);
-  }
+  gap: var(--grid-gap);
 }
 
 @media (max-width: 47.99rem) {
@@ -101,8 +96,8 @@ h2 {
   }
 
   h2 {
-    font-size: 2.5rem;
-    line-height: 2.625rem;
+    font-size: 2.25rem;
+    line-height: 2.375rem;
   }
 
   .personal__content {
@@ -111,16 +106,14 @@ h2 {
   }
 
   .personal__copy {
+    grid-column: auto;
     font-size: 1rem;
     line-height: 1.5rem;
   }
 
   .personal__photos {
-    grid-template-columns: 1fr;
-  }
-
-  .personal__photos :last-child {
-    max-width: calc((100% - var(--space-4)) / 2);
+    grid-column: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>
