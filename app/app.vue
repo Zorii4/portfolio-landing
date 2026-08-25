@@ -10,12 +10,22 @@ import ContactSection from '~/components/sections/ContactSection.vue'
 import { portfolio } from '~/data/portfolio'
 
 const structureMode = ref(false)
+const siteUrl = 'https://zori4.ru'
+const seoTitle = 'Антон Зорин — frontend-разработчик | Vue, Nuxt, TypeScript'
+const seoDescription =
+  'Антон Зорин — frontend-разработчик на Vue, Nuxt и TypeScript. Сложные продуктовые интерфейсы, архитектура, бизнес-логика и интеграции.'
+const seoImage = `${siteUrl}/og-image.png`
+const seoImageAlt = 'Антон Зорин — frontend-разработчик. Сложные интерфейсы. Понятные решения.'
 
 useHead({
   htmlAttrs: {
     lang: 'ru',
   },
   link: [
+    {
+      rel: 'canonical',
+      href: `${siteUrl}/`,
+    },
     {
       rel: 'icon',
       type: 'image/svg+xml',
@@ -25,8 +35,23 @@ useHead({
 })
 
 useSeoMeta({
-  title: 'Антон Зорин — Frontend Engineer',
-  description: 'Frontend Engineer: Vue, Nuxt, TypeScript и сложные продуктовые интерфейсы.',
+  title: seoTitle,
+  description: seoDescription,
+  ogType: 'website',
+  ogLocale: 'ru_RU',
+  ogSiteName: 'Портфолио Антона Зорина',
+  ogUrl: `${siteUrl}/`,
+  ogTitle: seoTitle,
+  ogDescription: seoDescription,
+  ogImage: seoImage,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageAlt: seoImageAlt,
+  twitterCard: 'summary_large_image',
+  twitterTitle: seoTitle,
+  twitterDescription: seoDescription,
+  twitterImage: seoImage,
+  twitterImageAlt: seoImageAlt,
 })
 </script>
 
@@ -55,7 +80,11 @@ useSeoMeta({
       <PersonalSection
         :personal="portfolio.personal"
         :photo-one="portfolio.placeholders.personalPhotoOne"
+        :photo-one-src="portfolio.placeholders.personalPhotoOneSrc"
+        :photo-one-alt="portfolio.placeholders.personalPhotoOneAlt"
         :photo-two="portfolio.placeholders.personalPhotoTwo"
+        :photo-two-src="portfolio.placeholders.personalPhotoTwoSrc"
+        :photo-two-alt="portfolio.placeholders.personalPhotoTwoAlt"
       />
     </main>
     <ContactSection :contacts="portfolio.contacts" :links="portfolio.links" />

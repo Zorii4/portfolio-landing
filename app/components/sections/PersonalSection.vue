@@ -4,7 +4,11 @@ import type { portfolio } from '~/data/portfolio'
 defineProps<{
   personal: (typeof portfolio)['personal']
   photoOne: string
+  photoOneSrc: string
+  photoOneAlt: string
   photoTwo: string
+  photoTwoSrc: string
+  photoTwoAlt: string
 }>()
 </script>
 
@@ -23,8 +27,8 @@ defineProps<{
         </div>
 
         <div class="personal__photos">
-          <MediaPlaceholder :label="photoOne" alt="Фотография для личного профессионального блока" aspect-ratio="4 / 5" />
-          <MediaPlaceholder :label="photoTwo" alt="Фотография для личного профессионального блока" aspect-ratio="4 / 5" />
+          <MediaPlaceholder :label="photoOne" :src="photoOneSrc" :alt="photoOneAlt" aspect-ratio="4 / 5" />
+          <MediaPlaceholder :label="photoTwo" :src="photoTwoSrc" :alt="photoTwoAlt" aspect-ratio="4 / 5" />
         </div>
       </div>
     </div>

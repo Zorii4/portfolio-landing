@@ -1,9 +1,87 @@
 <script setup lang="ts">
+import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
+
 import type { portfolio } from '~/data/portfolio'
+
+type PreviewMedia = {
+  label: string
+  src: string
+  alt: string
+}
 
 defineProps<{
   work: (typeof portfolio)['selectedWork']
 }>()
+
+const activeMedia = ref<PreviewMedia | null>(null)
+const closeButton = ref<HTMLButtonElement | null>(null)
+
+let previouslyFocusedElement: HTMLElement | null = null
+let previousBodyOverflow = ''
+let previousBodyPaddingRight = ''
+let isBodyScrollLocked = false
+
+function openMedia(item: PreviewMedia, trigger: EventTarget | null) {
+  previouslyFocusedElement = trigger instanceof HTMLElement ? trigger : null
+  activeMedia.value = item
+}
+
+function closeMedia() {
+  activeMedia.value = null
+}
+
+function lockBodyScroll() {
+  if (isBodyScrollLocked) return
+
+  previousBodyOverflow = document.body.style.overflow
+  previousBodyPaddingRight = document.body.style.paddingRight
+
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+  document.body.style.overflow = 'hidden'
+
+  if (scrollbarWidth > 0) {
+    document.body.style.paddingRight = `${scrollbarWidth}px`
+  }
+
+  isBodyScrollLocked = true
+}
+
+function unlockBodyScroll() {
+  if (!isBodyScrollLocked || typeof document === 'undefined') return
+
+  document.body.style.overflow = previousBodyOverflow
+  document.body.style.paddingRight = previousBodyPaddingRight
+  isBodyScrollLocked = false
+}
+
+function handleModalKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    closeMedia()
+    return
+  }
+
+  if (event.key === 'Tab') {
+    event.preventDefault()
+    closeButton.value?.focus()
+  }
+}
+
+watch(activeMedia, async (media) => {
+  if (typeof document === 'undefined') return
+
+  if (media) {
+    lockBodyScroll()
+    await nextTick()
+    closeButton.value?.focus()
+    return
+  }
+
+  unlockBodyScroll()
+  previouslyFocusedElement?.focus()
+  previouslyFocusedElement = null
+})
+
+onBeforeUnmount(unlockBodyScroll)
 </script>
 
 <template>
@@ -36,12 +114,33 @@ defineProps<{
           </li>
         </ol>
 
-        <div class="project-case__media" :aria-label="`Материалы проекта ${project.title}`">
-          <MediaPlaceholder :label="project.media.main" :aspect-ratio="project.media.mainRatio" />
-          <div class="project-case__media-side">
-            <MediaPlaceholder class="project-case__secondary" :label="project.media.secondary" :aspect-ratio="project.media.secondaryRatio" />
-            <MediaPlaceholder :label="project.media.diagram" aspect-ratio="4 / 3" />
-          </div>
+        <div
+          class="project-case__media"
+          :class="`project-case__media--${project.media.layout}`"
+          :aria-label="`Материалы проекта ${project.title}`"
+        >
+          <figure
+            v-for="item in project.media.items"
+            :key="item.label"
+            class="project-case__media-item"
+            :class="`project-case__media-item--${item.slot}`"
+          >
+            <button
+              type="button"
+              class="project-case__media-button"
+              :aria-label="`Открыть изображение: ${item.label}`"
+              @click="openMedia(item, $event.currentTarget)"
+            >
+              <MediaPlaceholder
+                :label="item.label"
+                :src="item.src"
+                :alt="item.alt"
+                :aspect-ratio="item.ratio"
+                :object-position="item.objectPosition"
+              />
+            </button>
+            <figcaption>{{ item.label }}</figcaption>
+          </figure>
         </div>
 
         <ul class="project-case__proof" aria-label="Технические составляющие проекта">
@@ -58,6 +157,26 @@ defineProps<{
       </ul>
     </div>
   </section>
+
+  <Teleport to="body">
+    <div
+      v-if="activeMedia"
+      class="media-modal"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="activeMedia.label"
+      tabindex="-1"
+      @click.self="closeMedia"
+      @keydown="handleModalKeydown"
+    >
+      <div class="media-modal__content">
+        <img class="media-modal__image" :src="activeMedia.src" :alt="activeMedia.alt">
+        <button ref="closeButton" type="button" class="media-modal__close" aria-label="Закрыть просмотр" @click="closeMedia">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">
@@ -249,23 +368,72 @@ h4 {
 .project-case__media {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    'main main main main main main main main secondary secondary secondary secondary'
+    'main main main main main main main main detail detail detail detail';
   gap: var(--grid-gap);
   align-items: start;
   margin-top: var(--space-8);
 }
 
-.project-case__media-side {
-  display: grid;
-  grid-column: span 4;
-  gap: var(--grid-gap);
+.project-case__media-item {
+  min-width: 0;
+  margin: 0;
 }
 
-.project-case__media > :first-child {
-  grid-column: span 8;
+.project-case__media-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.project-case__media-button:focus-visible {
+  outline: 2px solid var(--signal-300);
+  outline-offset: 0.25rem;
+}
+
+.project-case__media-item--main {
+  grid-area: main;
+}
+
+.project-case__media-item--secondary {
+  grid-area: secondary;
+}
+
+.project-case__media-item--detail {
+  grid-area: detail;
+}
+
+.project-case__media--screenshots {
+  grid-template-areas: 'main main main main secondary secondary secondary secondary detail detail detail detail';
+  align-items: end;
 }
 
 .project-case__media :deep(.media-placeholder) {
   background: var(--neutral-25);
+}
+
+.project-case__media--screenshots :deep(.media-placeholder--image) {
+  border: 1px solid color-mix(in srgb, var(--neutral-0) 14%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.project-case__media--default :deep(.media-placeholder--image) {
+  border: 1px solid color-mix(in srgb, var(--neutral-0) 14%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.project-case__media figcaption {
+  margin-top: var(--space-3);
+  color: var(--neutral-300);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.035em;
+  line-height: 1.4;
 }
 
 .project-case__proof {
@@ -282,6 +450,58 @@ h4 {
   padding: 0.375rem 0.5rem;
   border: 1px solid color-mix(in srgb, var(--neutral-0) 16%, transparent);
   border-radius: var(--radius-pill);
+}
+
+.media-modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--graphite-950) 84%, transparent);
+}
+
+.media-modal__content {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-modal__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 3rem);
+  max-height: calc(100vh - 3rem);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1.5rem 4rem color-mix(in srgb, var(--graphite-950) 55%, transparent);
+}
+
+.media-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--neutral-100);
+  border-radius: 50%;
+  background: var(--neutral-0);
+  color: var(--graphite-950);
+  cursor: pointer;
+  font-size: 1.75rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.media-modal__close:focus-visible {
+  outline: 2px solid var(--signal-300);
+  outline-offset: 0.25rem;
 }
 
 @media (max-width: 63.99rem) {
@@ -309,9 +529,25 @@ h4 {
     grid-template-columns: 1fr;
   }
 
-  .project-case__media > :first-child,
-  .project-case__media-side {
-    grid-column: auto;
+  .project-case__media {
+    grid-template-areas:
+      'main'
+      'detail';
+  }
+
+  .project-case__media-item--secondary {
+    display: none;
+  }
+
+  .project-case__media--screenshots {
+    grid-template-areas:
+      'main'
+      'secondary'
+      'detail';
+  }
+
+  .project-case__media--screenshots .project-case__media-item--secondary {
+    display: block;
   }
 
   h2 {
@@ -340,8 +576,19 @@ h4 {
     line-height: 1.375rem;
   }
 
-  .project-case__secondary {
-    display: none;
+  .media-modal {
+    padding: 0.75rem;
   }
+
+  .media-modal__image {
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100vh - 1.5rem);
+  }
+
+  .media-modal__close {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
 }
 </style>

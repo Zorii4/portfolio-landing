@@ -5,11 +5,15 @@ withDefaults(
     alt?: string
     src?: string
     aspectRatio?: string
+    objectPosition?: string
+    loading?: 'eager' | 'lazy'
   }>(),
   {
     alt: '',
     src: '',
     aspectRatio: '4 / 3',
+    objectPosition: 'center',
+    loading: 'lazy',
   },
 )
 </script>
@@ -18,9 +22,11 @@ withDefaults(
   <img
     v-if="src"
     class="media-placeholder media-placeholder--image"
-    :style="{ aspectRatio }"
+    :style="{ aspectRatio, objectPosition }"
     :src="src"
     :alt="alt || ''"
+    :loading="loading"
+    decoding="async"
   >
   <div
     v-else

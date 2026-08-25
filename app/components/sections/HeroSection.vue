@@ -31,7 +31,7 @@ defineProps<{
       </div>
 
       <div class="hero__media">
-        <MediaPlaceholder :label="photoLabel" :src="photoSrc" :alt="photoAlt" aspect-ratio="4 / 5" />
+        <MediaPlaceholder :label="photoLabel" :src="photoSrc" :alt="photoAlt" aspect-ratio="4 / 5" loading="eager" />
         <p v-if="!photoSrc">PHOTO PLACEHOLDER · NATURAL PORTRAIT · 4:5</p>
       </div>
     </div>
