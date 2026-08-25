@@ -1,0 +1,84 @@
+name: Deploy portfolio
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check code
+        run: |
+          pnpm lint
+          pnpm typecheck
+
+      - name: Generate static site
+        run: pnpm generate
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify deploy access
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+        run: |
+          ssh -o BatchMode=yes "$VPS_USER@$VPS_HOST" "test -w '$DEPLOY_PATH'"
+
+      - name: Deploy static files
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+        run: |
+          rsync -az \
+            --delete-delay \
+            --delay-updates \
+            --chmod=D755,F644 \
+            .output/public/ \
+            "$VPS_USER@$VPS_HOST:$DEPLOY_PATH/"
+
+      - name: Verify deployed files
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+        run: |
+          ssh -o BatchMode=yes "$VPS_USER@$VPS_HOST" \
+            "test -s '$DEPLOY_PATH/index.html' && test -s '$DEPLOY_PATH/sitemap.xml'"
