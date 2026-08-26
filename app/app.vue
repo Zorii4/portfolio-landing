@@ -14,7 +14,7 @@ const siteUrl = 'https://zori4.ru'
 const seoTitle = 'Антон Зорин — frontend-разработчик | Vue, Nuxt, TypeScript'
 const seoDescription =
   'Антон Зорин — frontend-разработчик на Vue, Nuxt и TypeScript. Сложные продуктовые интерфейсы, архитектура, бизнес-логика и интеграции.'
-const seoImage = `${siteUrl}/og-image.png`
+const seoImage = `${siteUrl}/og-image.jpg`
 const seoImageAlt = 'Антон Зорин — frontend-разработчик. Сложные интерфейсы. Понятные решения.'
 
 useHead({

@@ -67,7 +67,7 @@ export const portfolio = {
           {
             slot: 'main',
             label: 'Результат анализа вакансии',
-            src: '/images/job-ai-helper/job-ai-analysis-result.jpg',
+            src: '/images/job-ai-helper/job-ai-analysis-result.webp',
             alt: 'Job AI Assistant показывает результат анализа вакансии с решением, ключевыми выводами и оценками соответствия',
             ratio: '16 / 10',
             objectPosition: 'center',
@@ -75,7 +75,7 @@ export const portfolio = {
           {
             slot: 'secondary',
             label: 'Создание анализа и текущие процессы',
-            src: '/images/job-ai-helper/job-ai-analysis-workspace.jpg',
+            src: '/images/job-ai-helper/job-ai-analysis-workspace.webp',
             alt: 'Рабочий экран Job AI Assistant для создания анализа вакансии и просмотра текущих процессов',
             ratio: '16 / 10',
             objectPosition: 'center',
@@ -110,7 +110,7 @@ export const portfolio = {
           {
             slot: 'main',
             label: 'AI-рекомендация и действия пользователя',
-            src: '/images/meal-memory-bot/recommendation.jpg',
+            src: '/images/meal-memory-bot/recommendation.webp',
             alt: 'Meal Memory Bot предлагает блюдо и показывает действия для подтверждения или нового совета',
             ratio: '4 / 5',
             objectPosition: 'center 27%',
@@ -118,7 +118,7 @@ export const portfolio = {
           {
             slot: 'secondary',
             label: 'Список блюд и управление историей',
-            src: '/images/meal-memory-bot/dish-library.jpg',
+            src: '/images/meal-memory-bot/dish-library.webp',
             alt: 'Meal Memory Bot показывает сохранённые блюда и действия для истории приготовления',
             ratio: '4 / 5',
             objectPosition: 'center 27%',
@@ -126,7 +126,7 @@ export const portfolio = {
           {
             slot: 'detail',
             label: 'Похожее блюдо — деталь сценария',
-            src: '/images/meal-memory-bot/similar-dish-detail.jpg',
+            src: '/images/meal-memory-bot/similar-dish-detail.webp',
             alt: 'Meal Memory Bot показывает похожее блюдо и варианты сохранить или отметить его приготовленным',
             ratio: '4 / 5',
             objectPosition: 'center top',
@@ -242,13 +242,13 @@ export const portfolio = {
   },
   placeholders: {
     heroPhoto: 'PHOTO_01_HERO',
-    heroPhotoSrc: '/images/anton-zorin-hero.jpg',
+    heroPhotoSrc: '/images/anton-zorin-hero.webp',
     heroPhotoAlt: 'Антон Зорин — frontend-разработчик',
     personalPhotoOne: 'PHOTO_02_PERSONAL',
-    personalPhotoOneSrc: '/images/anton-zorin-personal-portrait.jpg',
+    personalPhotoOneSrc: '/images/anton-zorin-personal-portrait.webp',
     personalPhotoOneAlt: 'Антон Зорин в тёмно-синей рубашке на нейтральном фоне',
     personalPhotoTwo: 'PHOTO_03_PERSONAL',
-    personalPhotoTwoSrc: '/images/anton-zorin-personal-travel.jpg',
+    personalPhotoTwoSrc: '/images/anton-zorin-personal-travel.webp',
     personalPhotoTwoAlt: 'Антон Зорин у городского фонтана во время путешествия',
   },
 } as const
